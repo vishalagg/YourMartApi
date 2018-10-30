@@ -23,8 +23,8 @@ public class ProductController {
 	private ProductRepository productRepository;
 	
 	@GetMapping("/product")
-	public List<Product> getAllProduct(@RequestParam(value="offset",required=false) int offset,
-									   @RequestParam(value="limit",required=false) int limit,
+	public List<Product> getAllProduct(@RequestParam(value="offset",required=false,defaultValue="0") int offset,
+									   @RequestParam(value="limit",required=false,defaultValue="10") int limit,
 									   @RequestParam(value="sortBy",required=false) String sortBy,
 									   @RequestParam(value="searchKey",required=false) String searchKey,
 									   @RequestParam(value="searchQuery",required=false) String searchQuery,

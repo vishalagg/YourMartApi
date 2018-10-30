@@ -26,9 +26,9 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 	
 	@Override
 	public List<Seller> getAllSeller(int offset,int limit) {
-		Query query = em.createQuery("SELECT s FROM Seller s");
+		Query query = em.createQuery("SELECT s FROM Seller s ORDER BY statusId");
 		query.setFirstResult(offset);
-		query.setMaxResults(limit);
+		query.setMaxResults(limit);			
 		return (List<Seller>)query.getResultList();
 	}
 

@@ -20,8 +20,8 @@ public class SellerController {
 	private SellerRepository sellerRepository;
 	
 	@GetMapping("/seller")
-	public List<Seller> getAllSeller(@RequestParam(value="offset",required=false) int offset,
-			   						 @RequestParam(value="limit",required=false) int limit) {
+	public List<Seller> getAllSeller(@RequestParam(value="offset",required=false,defaultValue="0") int offset,
+			   						 @RequestParam(value="limit",required=false,defaultValue="10") int limit) {
 		return sellerRepository.getAllSeller(offset,limit);
 	}
 	
