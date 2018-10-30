@@ -1,6 +1,9 @@
 package com.nagarro.yourmartapi.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,7 +26,25 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Override
-	public Product getAllProduct() {
-		return em.find(Product.class, 10);
+	public List<Product> getAllProduct() {
+		Query query = em.createQuery("SELECT p FROM Product p");
+		return (List<Product>)query.getResultList();
 	}
+	
+	@Override
+	public Product getProduct(int id) {
+		return em.find(Product.class, id);
+	}
+
+	@Override
+	public Product updateProduct(Product product) {
+		return em.merge(product);
+	}
+
+	@Override
+	public void deleteProduct(int id) {
+		Query query = em.createQuery("DELETE FROM Product p WHERE p.id = :id");
+		int i = query.setParameter("id", id).executeUpdate();
+	}
+	
 }
