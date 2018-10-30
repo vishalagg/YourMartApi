@@ -26,8 +26,34 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Override
-	public List<Product> getAllProduct() {
-		Query query = em.createQuery("SELECT p FROM Product p");
+	public List<Product> getAllProduct(String searchKey, String searchQuery, String status, String category) {
+		Query query = null;
+		boolean isWhereRequired = true;
+		String queryString = "SELECT p FROM Product p ";
+		
+		if(searchKey!=null) {
+			String sq = searchKey.equals("name") ? "p.name" : "p.code" ;
+			queryString += "WHERE " + sq + " = '" + searchQuery + "' ";
+			isWhereRequired = false;
+		}
+		
+		if(status!=null) {
+			if(isWhereRequired) {
+				queryString += "WHERE p.status = '" + status + "' ";				
+				isWhereRequired = false;
+			}else {
+				queryString += "AND p.status = '" + status + "' ";				
+			}
+		}
+		if(category!=null) {
+			if(isWhereRequired) {
+				queryString += "WHERE p.category = '" + category + "' ";				
+				isWhereRequired = false;
+			}else {
+				queryString += "AND p.category = '" + category + "' ";				
+			}
+		}
+		query = em.createQuery(queryString);
 		return (List<Product>)query.getResultList();
 	}
 	

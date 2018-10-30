@@ -8,7 +8,7 @@ public interface ProductRepository {
 
 	public void save(Product product);
 
-	public List<Product> getAllProduct();
+	public List<Product> getAllProduct(String searchKey,String searchQuery,String status, String category);
 
 	public Product getProduct(int id);
 
