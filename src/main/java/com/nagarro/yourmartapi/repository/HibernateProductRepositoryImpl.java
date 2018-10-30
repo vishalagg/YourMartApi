@@ -26,7 +26,7 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Override
-	public List<Product> getAllProduct(String searchKey, String searchQuery, String status, String category) {
+	public List<Product> getAllProduct(int offset,int limit,String sortBy,String searchKey, String searchQuery, String status, String category) {
 		Query query = null;
 		boolean isWhereRequired = true;
 		String queryString = "SELECT p FROM Product p ";
@@ -53,7 +53,12 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 				queryString += "AND p.category = '" + category + "' ";				
 			}
 		}
+		if(sortBy!=null) {
+			queryString += "ORDER BY "+sortBy;
+		}
 		query = em.createQuery(queryString);
+		query.setFirstResult(offset);
+		query.setMaxResults(limit);
 		return (List<Product>)query.getResultList();
 	}
 	

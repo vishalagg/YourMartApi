@@ -23,11 +23,14 @@ public class ProductController {
 	private ProductRepository productRepository;
 	
 	@GetMapping("/product")
-	public List<Product> getAllProduct(@RequestParam(value="searchKey",required=false) String searchKey,
+	public List<Product> getAllProduct(@RequestParam(value="offset",required=false) int offset,
+									   @RequestParam(value="limit",required=false) int limit,
+									   @RequestParam(value="sortBy",required=false) String sortBy,
+									   @RequestParam(value="searchKey",required=false) String searchKey,
 									   @RequestParam(value="searchQuery",required=false) String searchQuery,
 									   @RequestParam(value="status",required=false) String status,
 									   @RequestParam(value="category",required=false) String category) {
-		return productRepository.getAllProduct(searchKey,searchQuery,status,category);
+		return productRepository.getAllProduct(offset,limit,sortBy,searchKey,searchQuery,status,category);
 	}
 	
 	@PostMapping(path = "/product")

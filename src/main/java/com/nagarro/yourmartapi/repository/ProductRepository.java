@@ -8,11 +8,12 @@ public interface ProductRepository {
 
 	public void save(Product product);
 
-	public List<Product> getAllProduct(String searchKey,String searchQuery,String status, String category);
+	public List<Product> getAllProduct(int offset,int limit,String sortBy,String searchKey,String searchQuery,String status, String category);
 
 	public Product getProduct(int id);
 
 	public Product updateProduct(Product product);
 
 	public void deleteProduct(int id);
+	
 }
