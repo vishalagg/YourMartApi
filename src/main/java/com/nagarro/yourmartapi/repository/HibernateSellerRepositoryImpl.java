@@ -36,7 +36,6 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 	public Seller authenticate(int sellerId, String password) {
 		String queryString = "SELECT s FROM Seller s WHERE s.id = '" + sellerId + "' AND s.password = '" + password + "'";
 		Query query = em.createQuery(queryString);
-		System.out.println("Queryy stringg: "+queryString);
 		Seller result = (Seller) query.getSingleResult();
 		return result;
 	}
