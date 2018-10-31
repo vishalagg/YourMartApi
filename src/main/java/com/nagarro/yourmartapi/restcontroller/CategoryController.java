@@ -1,4 +1,4 @@
-package com.nagarro.yourmartapi.controller;
+package com.nagarro.yourmartapi.restcontroller;
 
 import java.util.List;
 

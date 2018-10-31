@@ -1,16 +1,13 @@
 package com.nagarro.yourmartapi.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,8 +27,20 @@ public class Seller {
 	private String gstNumber;
 	private String password;
 	private int statusId;
+	private String token;
 	
 	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	@PrePersist
+	private void ensureToken(){
+	    this.setToken(UUID.randomUUID().toString());
+	}
 	
 	@CreationTimestamp
 	private Date createdAt;
@@ -39,17 +48,6 @@ public class Seller {
 	@UpdateTimestamp
 	private Date updatedAt;
 	
-	
-//	@OneToMany(mappedBy="seller",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-//	private List<Product> products = new ArrayList<>();
-//	
-//	
-//	public List<Product> getProducts() {
-//		return products;
-//	}
-//	public void setProducts(List<Product> products) {
-//		this.products = products;
-//	}
 	public String getCompanyName() {
 		return companyName;
 	}

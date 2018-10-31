@@ -1,9 +1,8 @@
-package com.nagarro.yourmartapi.controller;
+package com.nagarro.yourmartapi.restcontroller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.model.SellerLogin;
 import com.nagarro.yourmartapi.repository.SellerRepository;
 
 @RestController
@@ -25,9 +25,14 @@ public class SellerController {
 		return sellerRepository.getAllSeller(offset,limit);
 	}
 	
-	@PostMapping(path = "/seller")
+	@PostMapping(path = "/seller/register")
 	public void addSeller(@RequestBody Seller seller) {
-		System.out.println(seller);
 		sellerRepository.save(seller);
+	}
+	
+	@PostMapping(path="/seller/login")
+	public Seller login(@RequestBody SellerLogin sellerLogin) {
+		Seller seller = sellerRepository.authenticate(sellerLogin.getid(),sellerLogin.getPassword());
+		return seller;
 	}
 }
