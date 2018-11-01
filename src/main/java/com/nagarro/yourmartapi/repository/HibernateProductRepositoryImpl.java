@@ -100,12 +100,12 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 				queryString += "AND p.status = '" + status + "' ";				
 			}
 		}
-		if(category!=null) {
+		if(category!=null && !category.equals("null")) {
 			if(isWhereRequired) {
-				queryString += "WHERE p.category = '" + category + "' ";				
+				queryString += "WHERE p.category.name = '" + category + "' ";				
 				isWhereRequired = false;
 			}else {
-				queryString += "AND p.category = '" + category + "' ";				
+				queryString += "AND p.category.name = '" + category + "' ";				
 			}
 		}
 		if(sellerId!=null && !sellerId.equals("null")) {

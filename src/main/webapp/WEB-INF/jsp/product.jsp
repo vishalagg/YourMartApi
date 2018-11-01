@@ -93,16 +93,32 @@
    				</c:forEach>
   			</select>
 	    </div>
+	    
+	    <div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  	   	    	<label class="input-group-text" for="inputGroupSelect01">Options</label>
+ 			</div>
+		    <select class="custom-select" id="inputGroupSelect01" name="category">
+    			<option value="null">Choose Category..</option>
+    			<c:forEach items="${categories}" var="category">
+   					<option value="${category.name}">${category.name}</option>
+   				</c:forEach>
+  			</select>
+	    </div>
 	  	
 	  	
 	  	<h3>Choose status:</h3>
-	  	<input type="radio" name="status" value="NEED_APPROVAL" ${needApprovalChecked}/>NEED_APPROVAL <br />
+	  	<input type="radio" name="status" value="NEW" ${newChecked}/>NEW <br />
 	  	<input type="radio" name="status" value="APPROVED" ${approvedChecked}/>APPROVED<br />
+	  	<input type="radio" name="status" value="REVIEW" ${reviewChecked}/>REVIEW<br />
 	  	<input type="radio" name="status" value="REJECTED" ${rejectedChecked}/>REJECTED <br />
 	  	
 	  	<h3>Sort By</h3>
-	  	<input type="radio" name="sortBy" value="id" ${idChecked}/>product ID<br />
-	  	<input type="radio" name="sortBy" value="createdAt" ${createdAtChecked}/>Registration Time<br />
+	  	<input type="radio" name="sortBy" value="mrp" ${mrpChecked}/>MRP<br />
+	  	<input type="radio" name="sortBy" value="ssp" ${sspChecked}/>SSP<br />
+	  	<input type="radio" name="sortBy" value="ymp" ${ympChecked}/>YMP<br />
+	  	<input type="radio" name="sortBy" value="createdAt" ${createdAtChecked}/>Created At<br />
+	  	<input type="radio" name="sortBy" value="updatedAt" ${updatedAtChecked}/>Updated At<br />
 		
 		<input type="submit" value="pessMe">
  	 </form>

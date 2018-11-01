@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nagarro.yourmartapi.entity.Category;
 import com.nagarro.yourmartapi.entity.Product;
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.repository.CategoryRepository;
 import com.nagarro.yourmartapi.repository.ProductRepository;
 import com.nagarro.yourmartapi.repository.SellerRepository;
 
@@ -26,6 +28,9 @@ public class AdminPanelProductController {
 	
 	@Autowired
 	private SellerRepository sellerRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@RequestMapping(value="/admin/product",method = RequestMethod.GET)
 	public String getAllProduct(Model model,HttpServletRequest request,HttpServletResponse response, 
@@ -48,17 +53,25 @@ public class AdminPanelProductController {
 			model.addAttribute("idChecked", idChecked);
 		}
 		if(sortBy!=null) {
-			String idChecked = sortBy.equals("id") ? "checked" : " "; 
-			model.addAttribute("idChecked", idChecked);
+			String mrpChecked = sortBy.equals("mrp") ? "checked" : " "; 
+			model.addAttribute("mrpChecked", mrpChecked);
+			String sspChecked = sortBy.equals("ssp") ? "checked" : " "; 
+			model.addAttribute("sspChecked", sspChecked);
+			String ympChecked = sortBy.equals("ymp") ? "checked" : " "; 
+			model.addAttribute("ympChecked", ympChecked);
 			String createdAtChecked = sortBy.equals("createdAt") ? "checked" : " "; 
 			model.addAttribute("createdAtChecked", createdAtChecked);
+			String updatedAtChecked = sortBy.equals("updatedAt") ? "checked" : " "; 
+			model.addAttribute("updatedAtChecked", updatedAtChecked);
 			
 		}
 		if(status!=null) {
-			String needApprovalChecked = status.equals("NEED_APPROVAL") ? "checked" : " "; 
-			model.addAttribute("needApprovalChecked", needApprovalChecked);
+			String newChecked = status.equals("NEW") ? "checked" : " "; 
+			model.addAttribute("newChecked", newChecked);
 			String approvedChecked = status.equals("APPROVED") ? "checked" : " "; 
 			model.addAttribute("approvedChecked", approvedChecked);
+			String reviewChecked = status.equals("REVIEW") ? "checked" : " "; 
+			model.addAttribute("reviewChecked", reviewChecked);
 			String rejectedChecked = status.equals("REJECTED") ? "checked" : " "; 
 			model.addAttribute("rejectedChecked", rejectedChecked);
 		}
@@ -68,12 +81,15 @@ public class AdminPanelProductController {
 			ArrayList<Product> products = new ArrayList<>();
 			ArrayList<Integer> sellerIds = new ArrayList<>();
 			ArrayList<String> sellerCompanyNames = new ArrayList<>();
+			ArrayList<Category> categories = new ArrayList<>();
 			products = (ArrayList<Product>) productRepository.getAllProduct(offset, limit, sortBy, searchKey, searchQuery, status, category,sellerId,sellerCompanyName);
 			sellerIds = (ArrayList<Integer>) sellerRepository.getAllSellerId();
 			sellerCompanyNames = (ArrayList<String>) sellerRepository.getAllSellerCampanyName();
+			categories = (ArrayList<Category>) categoryRepository.getAllCategory();
 			model.addAttribute("products", products);
 			model.addAttribute("sellerIds", sellerIds);
 			model.addAttribute("sellerCompanyNames", sellerCompanyNames);
+			model.addAttribute("categories", categories);
 			return "product";
 		}
 		return "redirect:/admin/login";
