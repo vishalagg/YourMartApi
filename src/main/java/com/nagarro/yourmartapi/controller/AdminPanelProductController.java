@@ -13,31 +13,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nagarro.yourmartapi.entity.Product;
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.repository.ProductRepository;
 import com.nagarro.yourmartapi.repository.SellerRepository;
 
 @Controller
-public class AdminPanelSellerController {
-
+public class AdminPanelProductController {
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@Autowired
 	private SellerRepository sellerRepository;
-	
-	@RequestMapping(value="/admin/seller",method = RequestMethod.GET)
-	public String getAllSeller(Model model,HttpServletRequest request,HttpServletResponse response, 
+
+	@RequestMapping(value="/admin/product",method = RequestMethod.GET)
+	public String getAllProduct(Model model,HttpServletRequest request,HttpServletResponse response, 
 								@RequestParam(value="status",required = false) String status, 
 								@RequestParam(value="searchQuery",required = false) String searchQuery,
 								@RequestParam(value="searchKey",required = false) String searchKey,
-								@RequestParam(value="sortBy",defaultValue="statusId") String sortBy){
+								@RequestParam(value="sortBy",required=false) String sortBy,
+								@RequestParam(value="category",required=false) String category,
+								@RequestParam(value="sellerId",required=false) String sellerId,
+								@RequestParam(value="sellerCompanyName",required=false) String sellerCompanyName){
 		
 		HttpSession session = request.getSession(false);
 		model.addAttribute("searchQuery", searchQuery);
 		if(searchKey!=null) {
-			String companyChecked = searchKey.equals("COMPANY_NAME") ? "checked" : " "; 
-			model.addAttribute("companyChecked", companyChecked);
-			String ownerChecked = searchKey.equals("OWNER_NAME") ? "checked" : " "; 
-			model.addAttribute("ownerChecked", ownerChecked);
-			String phoneChecked = searchKey.equals("PHONE") ? "checked" : " "; 
-			model.addAttribute("phoneChecked", phoneChecked);
+			String codeChecked = searchKey.equals("code") ? "checked" : " "; 
+			model.addAttribute("codeChecked", codeChecked);
+			String nameChecked = searchKey.equals("name") ? "checked" : " "; 
+			model.addAttribute("nameChecked", nameChecked);
+			String idChecked = searchKey.equals("id") ? "checked" : " "; 
+			model.addAttribute("idChecked", idChecked);
 		}
 		if(sortBy!=null) {
 			String idChecked = sortBy.equals("id") ? "checked" : " "; 
@@ -57,24 +65,19 @@ public class AdminPanelSellerController {
 		if(session!=null && session.getAttribute("admin")!=null) {
 			int offset = 0;
 			int limit = 10;
-			ArrayList<Seller> sellers = new ArrayList<>();
-			sellers = (ArrayList<Seller>) sellerRepository.getAllSeller(offset, limit, sortBy,status,searchKey,searchQuery);
-			model.addAttribute("sellers", sellers);
-			return "seller";
+			ArrayList<Product> products = new ArrayList<>();
+			ArrayList<Integer> sellerIds = new ArrayList<>();
+			ArrayList<String> sellerCompanyNames = new ArrayList<>();
+			products = (ArrayList<Product>) productRepository.getAllProduct(offset, limit, sortBy, searchKey, searchQuery, status, category,sellerId,sellerCompanyName);
+			sellerIds = (ArrayList<Integer>) sellerRepository.getAllSellerId();
+			sellerCompanyNames = (ArrayList<String>) sellerRepository.getAllSellerCampanyName();
+			model.addAttribute("products", products);
+			model.addAttribute("sellerIds", sellerIds);
+			model.addAttribute("sellerCompanyNames", sellerCompanyNames);
+			return "product";
 		}
 		return "redirect:/admin/login";
 	}
-	
-	@RequestMapping(value="/admin/seller",method = RequestMethod.POST)
-	public String homePage(HttpServletRequest request, HttpServletResponse response) {
-		String[] ids = request.getParameterValues("cbox");
-		if(ids!=null) {
-			for(String value : ids) {
-				System.out.println(value);
-				// 1=>NEED_APPROVAL 2=>APPROVED 3=>REJECTED
-				sellerRepository.setStatus(value,2);
-			}			
-		}
-		return "redirect:/admin/seller";
-	}
+
+
 }

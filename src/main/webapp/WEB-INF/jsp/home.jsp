@@ -19,15 +19,15 @@
 		
 	</c:if>
 	
-	<form action="/admin/seller" method="POST">
+	<form action="/admin/seller" method="GET">
 		<button type="submit">Seller</button>
 	</form>
 	
-	<form action="/admin/product" method="POST">
+	<form action="/admin/product" method="GET">
 		<button type="submit">Product</button>
 	</form>
 	
-	<form action="/admin/category" method="POST">
+	<form action="/admin/category" method="GET">
 		<button type="submit">Category</button>
 	</form>
 </body>
