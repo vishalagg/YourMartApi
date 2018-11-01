@@ -52,7 +52,7 @@
           </c:if>
           </td>
           <td>
-            <a href="product/details">Details</a>
+            <a href="product/${product.id}">Details</a>
           </td>
         </tr>
       </c:forEach>
