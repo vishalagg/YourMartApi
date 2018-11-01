@@ -82,4 +82,9 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 		return (ArrayList<String>) em.createQuery(queryString).getResultList();
 	}
 
+	@Override
+	public Seller getSeller(int id) {
+		return em.find(Seller.class, id);
+	}
+
 }

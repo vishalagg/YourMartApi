@@ -38,7 +38,7 @@
           </c:if>
           </td>
           <td>
-            <a href="seller/details">Details</a>
+            <a href="seller/${seller.id}">Details</a>
           </td>
         </tr>
       </c:forEach>

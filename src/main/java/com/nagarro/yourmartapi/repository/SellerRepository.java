@@ -13,5 +13,6 @@ public interface SellerRepository {
 	void setStatus(String value, int i);
 	ArrayList<Integer> getAllSellerId();
 	ArrayList<String> getAllSellerCampanyName();
+	Seller getSeller(int id);
 
 }
