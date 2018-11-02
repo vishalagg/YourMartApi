@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nagarro.yourmartapi.dto.SellerLoginResponse;
 import com.nagarro.yourmartapi.entity.Seller;
 import com.nagarro.yourmartapi.model.SellerLogin;
 import com.nagarro.yourmartapi.repository.SellerRepository;
+import com.nagarro.yourmartapi.util.Utility;
 
 @RestController
 public class SellerController {
@@ -31,8 +33,9 @@ public class SellerController {
 	}
 	
 	@PostMapping(path="/seller/login")
-	public Seller login(@RequestBody SellerLogin sellerLogin) {
+	public SellerLoginResponse login(@RequestBody SellerLogin sellerLogin) {
 		Seller seller = sellerRepository.authenticate(sellerLogin.getid(),sellerLogin.getPassword());
-		return seller;
+		SellerLoginResponse sellerLoginResponse = Utility.convertModel(seller, SellerLoginResponse.class);
+		return sellerLoginResponse;
 	}
 }
