@@ -3,6 +3,8 @@ package com.nagarro.yourmartapi.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import com.nagarro.yourmartapi.model.SellerLogin;
 import com.nagarro.yourmartapi.repository.SellerRepository;
 import com.nagarro.yourmartapi.util.Utility;
 
+@CrossOrigin
 @RestController
 public class SellerController {
 
@@ -30,12 +33,17 @@ public class SellerController {
 	@PostMapping(path = "/seller/register")
 	public void addSeller(@RequestBody Seller seller) {
 		sellerRepository.save(seller);
+		
 	}
-	
 	@PostMapping(path="/seller/login")
-	public SellerLoginResponse login(@RequestBody SellerLogin sellerLogin) {
+	public ResponseEntity login(@RequestBody SellerLogin sellerLogin) {
+		System.out.println(sellerLogin.getid() +  "  " + sellerLogin.getPassword());
 		Seller seller = sellerRepository.authenticate(sellerLogin.getid(),sellerLogin.getPassword());
-		SellerLoginResponse sellerLoginResponse = Utility.convertModel(seller, SellerLoginResponse.class);
-		return sellerLoginResponse;
+		SellerLoginResponse sellerLoginResponse = new SellerLoginResponse();
+		if(seller!=null) {
+			sellerLoginResponse = Utility.convertModel(seller, SellerLoginResponse.class);			
+			return ResponseEntity.status(200).body(sellerLoginResponse);
+		}
+		return ResponseEntity.badRequest().body("Invalid Credentials hai be");	
 	}
 }
