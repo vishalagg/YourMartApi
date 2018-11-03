@@ -1,11 +1,11 @@
 package com.nagarro.yourmartapi.util;
 
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import java.util.List;
 
 
 /**
@@ -28,7 +28,6 @@ public class Utility {
 
     public static <T> T convertModel(Object sourceClass, Class<T> destinationClass) {
         try {
-//            JavaType javaType = typeFactory.constructType(destinationClass);
             return objectMapper.convertValue(sourceClass, destinationClass);
         } catch (Exception exp) {
             return null;

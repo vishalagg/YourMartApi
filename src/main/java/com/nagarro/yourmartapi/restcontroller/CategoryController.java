@@ -26,7 +26,6 @@ public class CategoryController {
 	
 	@PostMapping(path = "/category")
 	public void addCategory(@RequestBody Category category) {
-		System.out.println(category);
 		categoryRepository.save(category);
 	}
 }

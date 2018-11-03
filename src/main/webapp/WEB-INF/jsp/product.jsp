@@ -47,7 +47,7 @@
           <td>${product.category.name}</td>
           <td>${product.status}</td>
           <td>
-          <c:if test="${product.status=='NEW'}">
+          <c:if test="${product.status==1}">
             <input type="checkbox" name="cbox" value="${product.id}">
           </c:if>
           </td>

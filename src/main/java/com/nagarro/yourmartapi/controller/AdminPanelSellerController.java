@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.enums.SellerStatus;
 import com.nagarro.yourmartapi.repository.SellerRepository;
 
 @Controller
@@ -72,9 +73,8 @@ public class AdminPanelSellerController {
 		String[] ids = request.getParameterValues("cbox");
 		if(ids!=null) {
 			for(String value : ids) {
-				System.out.println(value);
 				// 1=>NEED_APPROVAL 2=>APPROVED 3=>REJECTED
-				sellerRepository.setStatus(value,2);
+				sellerRepository.setStatus(value,SellerStatus.APPROVED.ordinal()+1);
 			}			
 		}
 		return "redirect:/admin/seller";

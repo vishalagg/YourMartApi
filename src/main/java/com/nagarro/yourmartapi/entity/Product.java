@@ -28,7 +28,7 @@ public class Product {
 	private String name;
 	private String code;
 
-	private String status;
+	private int status;
 	private int mrp;
 	private int ssp;
 	private int ymp;
@@ -93,11 +93,11 @@ public class Product {
 		this.code = code;
 	}
 	
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 	
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	
