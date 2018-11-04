@@ -242,7 +242,9 @@
             </div>
         </div>
     </div>
-
+	<div class="footer">
+         Made with <i class="fas fa-heart"></i>
+    </div>
 </body>
 
 </html>

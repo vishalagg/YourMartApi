@@ -48,12 +48,12 @@ public class AdminPanelProductController {
 		int productStatus = -1;
 		model.addAttribute("searchQuery", searchQuery);
 		if(searchKey!=null) {
-			String codeChecked = searchKey.equals("code") ? "checked" : " "; 
-			model.addAttribute("codeChecked", codeChecked);
-			String nameChecked = searchKey.equals("name") ? "checked" : " "; 
-			model.addAttribute("nameChecked", nameChecked);
-			String idChecked = searchKey.equals("id") ? "checked" : " "; 
-			model.addAttribute("idChecked", idChecked);
+			String codeSelected = searchKey.equals("code") ? "selected" : " "; 
+			model.addAttribute("codeSelected", codeSelected);
+			String nameSelected = searchKey.equals("name") ? "selected" : " "; 
+			model.addAttribute("nameSelected", nameSelected);
+			String idSelected = searchKey.equals("id") ? "selected" : " "; 
+			model.addAttribute("idSelected", idSelected);
 		}
 		if(sortBy!=null) {
 			String mrpChecked = sortBy.equals("mrp") ? "checked" : " "; 
@@ -87,6 +87,7 @@ public class AdminPanelProductController {
 			ArrayList<Integer> sellerIds = new ArrayList<>();
 			ArrayList<String> sellerCompanyNames = new ArrayList<>();
 			ArrayList<Category> categories = new ArrayList<>();
+			System.out.println(searchKey + " kkk "+ searchQuery);
 			products = (ArrayList<Product>) productRepository.getAllProduct(offset, limit, sortBy, searchKey, searchQuery, productStatus, category,sellerId,sellerCompanyName);
 			sellerIds = (ArrayList<Integer>) sellerRepository.getAllSellerId();
 			sellerCompanyNames = (ArrayList<String>) sellerRepository.getAllSellerCampanyName();
@@ -107,7 +108,7 @@ public class AdminPanelProductController {
 			for(String value : ids) {
 				System.out.println(value);
 				// 1=>NEED_APPROVAL 2=>APPROVED 3=>REJECTED
-				productRepository.setStatus(value,ProductStatus.APPROVED.ordinal()+1);
+				productRepository.setStatus(value,ProductStatus.APPROVED.ordinal()+1,"");
 			}			
 		}
 		return "redirect:/admin/product";
@@ -115,7 +116,17 @@ public class AdminPanelProductController {
 	
 	@RequestMapping(value="/admin/product/{productId}", method = RequestMethod.GET)
 	public String productDetailsPage(HttpServletRequest request, HttpServletResponse response,
-									@PathVariable("productId") int id, ModelMap model) {
+									@PathVariable("productId") int id, ModelMap model,
+									@RequestParam(value="status",required = false) String status,
+									@RequestParam(value="comment",required = false) String comment) {
+		if(status!=null) {
+			int intStatus = Integer.parseInt(status);
+			if(intStatus==4 && comment.isEmpty()) {
+				model.addAttribute("commentError", "**please write comment");
+			}else {
+				productRepository.setStatus(id+"", intStatus,comment);				
+			}
+		}
 		Product product = productRepository.getProduct(id);
 		model.addAttribute("product", product);
 		return "productDetails";

@@ -72,6 +72,7 @@
                 <li class="nav-item">
                 	<form action="/admin/product" method="GET">
                     	<button type="submit" class="nav-link">Products</button>
+                    </form>
                 </li>
                 <li class="nav-item">
                     <form action="/admin/category" method="GET">
@@ -138,7 +139,7 @@
         
         <div class="col-md-4">
         	<div style="padding-top:30px;">
-        	<form action="/admin/seller/${sellerId}">
+        	<form action="/admin/seller/${sellerId}" method="GET">
         		<div class="input-group mb-3">
   					<div class="input-group-prepend">
   					  <label class="input-group-text" for="inputGroupSelect01">Status</label>
@@ -156,7 +157,9 @@
    </div> 
    
    </div>    
-	
+	<div class="footer">
+         Made with <i class="fas fa-heart"></i>
+    </div>
   
   	
 </body>

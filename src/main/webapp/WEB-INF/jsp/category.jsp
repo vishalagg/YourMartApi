@@ -26,7 +26,6 @@
         <tr>
           <td>${category.id}</td>
           <td>${category.name}</td>
-          <td>${category.productCount}</td>
         </tr>
       </c:forEach>
     </table>
