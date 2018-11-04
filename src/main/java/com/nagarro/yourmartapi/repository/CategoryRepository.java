@@ -7,5 +7,6 @@ import com.nagarro.yourmartapi.entity.Category;
 public interface CategoryRepository {
 
 	public List<Category> getAllCategory(); 
-	public void save(Category category); 
+	public void save(Category category);
+	public void setName(int id, String name); 
 }

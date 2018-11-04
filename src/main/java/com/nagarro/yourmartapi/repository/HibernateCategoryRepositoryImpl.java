@@ -1,6 +1,5 @@
 package com.nagarro.yourmartapi.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,6 +27,12 @@ public class HibernateCategoryRepositoryImpl implements CategoryRepository{
 	@Override
 	public void save(Category category) {
 		em.persist(category);
+	}
+
+	@Override
+	public void setName(int id, String name) {
+		Query query = em.createQuery("UPDATE Category c SET c.name = '" +name+ "' WHERE c.id = "+id);
+		query.executeUpdate();
 	}
 
 }

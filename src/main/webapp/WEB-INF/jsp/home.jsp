@@ -68,6 +68,7 @@
                 <li class="nav-item">
                 	<form action="/admin/product" method="GET">
                     	<button type="submit" class="nav-link">Products</button>
+                    </form>
                 </li>
                 <li class="nav-item">
                     <form action="/admin/category" method="GET">
