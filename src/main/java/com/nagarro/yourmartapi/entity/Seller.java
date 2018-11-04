@@ -25,7 +25,6 @@ public class Seller {
 	private String email;
 	private String phone;
 	private String gstNumber;
-	private String password;
 	private int statusId;
 	private String token;
 	
@@ -83,12 +82,6 @@ public class Seller {
 	}
 	public void setGstNumber(String gstNumber) {
 		this.gstNumber = gstNumber;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public int getStatusId() {
 		return statusId;

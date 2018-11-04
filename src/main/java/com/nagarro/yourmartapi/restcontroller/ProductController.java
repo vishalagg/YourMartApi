@@ -3,6 +3,7 @@ package com.nagarro.yourmartapi.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,9 +76,9 @@ public class ProductController {
 	}
 	
 	@GetMapping(path="/product/{id}")
-	public Product getProductById(@PathVariable("id") int id) {
+	public ProductResponse getProductById(@PathVariable("id") int id) {
 		try {
-			return productRepository.getProduct(id);			
+			return Utility.convertModel(productRepository.getProduct(id), ProductResponse.class);		
 		}catch(Exception e) {
 			throw new UnexpectedError();
 		}
@@ -90,6 +91,8 @@ public class ProductController {
 		try {
 			if(sellerRepository.isAuthenticatedByToken(product.getSeller().getId(),token)) {
 				try {
+					product.setStatus(ProductStatus.NEW.ordinal()+1);
+					product.setId(id);
 					updatedProduct = productRepository.updateProduct(product);			
 				}catch(Exception e) {
 					throw new BadRequest();	

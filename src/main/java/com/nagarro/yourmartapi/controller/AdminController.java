@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nagarro.yourmartapi.entity.Admin;
+import com.nagarro.yourmartapi.exceptions.InvalidCredentialException;
 import com.nagarro.yourmartapi.repository.AdminRepository;
 
 @Controller
@@ -28,9 +29,15 @@ public class AdminController {
 	@RequestMapping(value="/admin/login", method = RequestMethod.POST)
 	public String getAdminLoggedIn(ModelMap model,@RequestParam("username") String username,@RequestParam("password") String password,
 									HttpServletRequest request, HttpServletResponse response) {
-		Admin admin = adminRepository.authenticate(username,password);
-		request.getSession().setAttribute("admin",admin);
-		return "redirect:/admin/home";
+		try{
+			Admin admin = adminRepository.authenticate(username,password);
+			request.getSession().setAttribute("admin",admin);
+			model.clear();
+			return "redirect:/admin/home";
+		}catch(Exception e) {
+			model.addAttribute("logInError","Invalid Credentials");
+			return "login";
+		}
 	}
 	
 	@RequestMapping(value="/admin/home",method = RequestMethod.GET)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.yourmartapi.dto.SellerLoginResponse;
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.entity.SellerCredentials;
 import com.nagarro.yourmartapi.enums.SellerStatus;
 import com.nagarro.yourmartapi.exceptions.BaseException;
 import com.nagarro.yourmartapi.exceptions.InvalidCredentialException;
@@ -28,10 +29,11 @@ public class SellerController {
 	SellerLoginResponse sellerLoginResponse;
 	
 	@PostMapping(path = "/seller/register")
-	public void addSeller(@RequestBody Seller seller) {
+	public void addSeller(@RequestBody SellerCredentials sellerCredentials) {
 		try {
-			seller.setStatusId(SellerStatus.NEED_APPROVAL.ordinal()+1);
-			sellerRepository.save(seller);			
+			System.out.println("Hii" + sellerCredentials.getSeller().getOwnerName());
+			sellerCredentials.getSeller().setStatusId(SellerStatus.NEED_APPROVAL.ordinal()+1);
+			sellerRepository.save(sellerCredentials);			
 		}catch(Exception ex) {
 			throw new UnexpectedError();
 		}		

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nagarro.yourmartapi.entity.Seller;
+import com.nagarro.yourmartapi.entity.SellerCredentials;
 
 @Repository
 @Transactional
@@ -20,8 +21,8 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 	private EntityManager em;
 	
 	@Override
-	public void save(Seller seller) {
-		em.persist(seller);
+	public void save(SellerCredentials sellerCredentials) {
+		em.persist(sellerCredentials);
 		
 	}
 	
@@ -30,7 +31,7 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 		boolean isWhereRequired = true;
 		String queryString = "SELECT s FROM Seller s ";
 		
-		if(searchKey!=null) {
+		if(searchKey!=null && searchQuery!=null) {
 			String sq = searchKey.equals("COMPANY_NAME") ? "s.companyName" : (searchKey.equals("OWNER_NAME")?"s.ownerName":"s.phone");
 			queryString += "WHERE " + sq + " LIKE '%" + searchQuery + "%' ";
 			isWhereRequired = false;
@@ -47,7 +48,6 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 		}
 		
 		queryString += "ORDER BY "+sortBy;
-		System.out.println(queryString);
 		Query query = em.createQuery(queryString);
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);			
@@ -56,7 +56,7 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 
 	@Override
 	public Seller authenticate(int sellerId, String password) {
-		String queryString = "SELECT s FROM Seller s WHERE s.id = '" + sellerId + "' AND s.password = '" + password + "'";
+		String queryString = "SELECT s.Seller FROM SellerCredentials s WHERE s.Seller.id = '" + sellerId + "' AND s.password = '" + password + "'";
 		Query query = em.createQuery(queryString);
 		Seller result;
 		try {
@@ -68,10 +68,10 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 	}
 
 	@Override
-	public void setStatus(String id, int i) {
+	public void setStatus(int id, String i) {
 		String queryString = "UPDATE Seller s SET s.statusId = " + i +" WHERE s.id = " + id;
 		Query query = em.createQuery(queryString);
-		int numRows = query.executeUpdate();
+		query.executeUpdate();
 	}
 
 	@Override
@@ -96,6 +96,11 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 		String queryString = "SELECT s FROM Seller s WHERE s.id = '" + id + "' AND s.token = '" + token + "'";
 		Query query = em.createQuery(queryString);
 		return query.getSingleResult()!=null ? true : false ;
+	}
+
+	@Override
+	public Long totalSeller() {
+	    return (Long) em.createQuery("SELECT COUNT(s) FROM Seller s").getSingleResult();
 	}
 
 }

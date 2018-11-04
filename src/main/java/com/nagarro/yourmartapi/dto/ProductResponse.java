@@ -2,6 +2,7 @@ package com.nagarro.yourmartapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nagarro.yourmartapi.entity.Category;
+import com.nagarro.yourmartapi.entity.Seller;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductResponse {
@@ -19,7 +20,7 @@ public class ProductResponse {
 	private String comment;
 	private String attributes;
 	private Category category;
-
+	
 	public int getId() {
 		return id;
 	}

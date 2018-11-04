@@ -47,7 +47,6 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 			queryString += "ORDER BY "+sortBy;
 		}
 		query = em.createQuery(queryString);
-		System.out.println(queryString);
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
 		return (List<Product>)query.getResultList();
@@ -117,7 +116,6 @@ public class HibernateProductRepositoryImpl implements ProductRepository {
 		if(sortBy!=null) {
 			queryString += "ORDER BY "+sortBy;
 		}
-		System.out.println(queryString);
 		query = em.createQuery(queryString);
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);

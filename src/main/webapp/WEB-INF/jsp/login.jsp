@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,8 @@
 </head>
 <body>
     <div class="container">
-        <form action=""/admin/login"" method="POST">
+            ${logInError}
+        <form action=""/admin/login"" method="POST">        	
             <div class="form-group">
               <label>Email address</label>
               <input type="text" class="form-control" placeholder="Enter username" name="username">
