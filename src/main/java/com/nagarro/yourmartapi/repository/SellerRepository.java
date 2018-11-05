@@ -8,7 +8,7 @@ import com.nagarro.yourmartapi.entity.SellerCredentials;
 
 public interface SellerRepository {
 	
-	void save(SellerCredentials sellerCredentials);
+	int save(SellerCredentials sellerCredentials);
 	List<Seller> getAllSeller(int offset,int limit,String sortBy, String filter,String searchKey,String searchQuery);
 	Seller authenticate(int sellerId, String password);
 	void setStatus(int value, String status);

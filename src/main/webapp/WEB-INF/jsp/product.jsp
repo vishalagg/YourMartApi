@@ -235,7 +235,7 @@
                                 <br />
                                 <input type="radio" name="status" value="APPROVED" ${approvedChecked}/>APPROVED
                                 <br />
-                                <input type="radio" name="status" value="REVIEW" ${reviewChecked}/>REJECTED
+                                <input type="radio" name="status" value="REVIEW" ${reviewChecked}/>REVIEW
                                 <br />
                                 <input type="radio" name="status" value="REJECTED" ${rejectedChecked}/>REJECTED
                             </div>

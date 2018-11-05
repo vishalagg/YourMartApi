@@ -21,8 +21,9 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 	private EntityManager em;
 	
 	@Override
-	public void save(SellerCredentials sellerCredentials) {
+	public int save(SellerCredentials sellerCredentials) {
 		em.persist(sellerCredentials);
+		return sellerCredentials.getId()-1;
 		
 	}
 	
@@ -56,7 +57,7 @@ public class HibernateSellerRepositoryImpl implements SellerRepository {
 
 	@Override
 	public Seller authenticate(int sellerId, String password) {
-		String queryString = "SELECT s.Seller FROM SellerCredentials s WHERE s.Seller.id = '" + sellerId + "' AND s.password = '" + password + "'";
+		String queryString = "SELECT s.seller FROM SellerCredentials s WHERE s.seller.id = '" + sellerId + "' AND s.password = '" + password + "'";
 		Query query = em.createQuery(queryString);
 		Seller result;
 		try {

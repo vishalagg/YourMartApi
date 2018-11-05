@@ -29,11 +29,10 @@ public class SellerController {
 	SellerLoginResponse sellerLoginResponse;
 	
 	@PostMapping(path = "/seller/register")
-	public void addSeller(@RequestBody SellerCredentials sellerCredentials) {
+	public int addSeller(@RequestBody SellerCredentials sellerCredentials) {
 		try {
-			System.out.println("Hii" + sellerCredentials.getSeller().getOwnerName());
 			sellerCredentials.getSeller().setStatusId(SellerStatus.NEED_APPROVAL.ordinal()+1);
-			sellerRepository.save(sellerCredentials);			
+			return sellerRepository.save(sellerCredentials);			
 		}catch(Exception ex) {
 			throw new UnexpectedError();
 		}		

@@ -5,26 +5,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 @Entity
 public class Image {
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	byte[] image;
+	private byte[] image;
 	
 	@ManyToOne
 	private Product product;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public byte[] getImage() {
 		return image;
@@ -34,7 +33,12 @@ public class Image {
 		this.image = image;
 	}
 
-	public int getId() {
-		return id;
+	public Product getProduct() {
+		return product;
 	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 }
